@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173920868-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-173920868-3');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="地區年齡性別統計表-嚴重特殊傳染性肺炎(以週為單位)">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="張建文">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地區年齡性別統計表-嚴重特殊傳染性肺炎(以週為單位)</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css" />
+
+    <script src="jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.11/jquery.csv.min.js" integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+    <!-- 臺灣豬證明標章商家資料 -->
+    <!-- https://data.gov.tw/dataset/136370 -->
+    <!-- https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=tR9TIFWlvquB -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+</head>
+
+<body>
+    <h1 class="text-center">地區年齡性別統計表-嚴重特殊傳染性肺炎(以週為單位)</h1>
+    <table class="table" id="datatable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" width="10%">確定病名</th>
+                <th scope="col" width="10%">發病年份</th>
+                <th scope="col" width="10%">發病週別</th>
+                <th scope="col" width="10%">性別</th>
+                <th scope="col" width="10%">是否為境外移入</th>
+                <th scope="col" width="10%">年齡層</th>
+                <th scope="col" width="10%">確定病例數</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <!-- <th scope="row">1</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td> -->
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</body>
+<footer>
+    <h3 class="text-center">地區年齡性別統計表-嚴重特殊傳染性肺炎(以週為單位)</h3>
+    <div class="text-center"><a href="https://data.gov.tw/dataset/118038">地區年齡性別統計表-嚴重特殊傳染性肺炎(以週為單位)</a></div>
+
+    <!-- 授權說明網址: http://data.gov.tw/license，OAS：https://data.cdc.gov.tw/doc/CDC_OpenData.yaml，本資料集編碼(resource_id)：52eb9a7d-813d-48b1-b462-384a7c84a746 -->
+
+</footer>
+<script>
+    // const cors = 'https://cors-anywhere.herokuapp.com/'; // use cors-anywhere to fetch api data
+    // const url = 'https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=tR9TIFWlvquB'; // origin api url
+
+    // $.getJSON("https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=tR9TIFWlvquB")
+    // $.getJSON(`${cors}${url}`, e => {
+    // obj = $.csv.toObjects("./curlget.php")
+    // console.log(obj)
+    $.getJSON("./curlget.php", e => {
+        data = e;
+        console.log(data)
+        for (let i = 1; i < data.length - 1; i++) {
+            print += `
+                            <tr>
+                        <th scope="row">${data[i][0]}</th>
+                        <td>${data[i][1]}</td>
+                        <td>${data[i][2]}</td>
+                        <td>${data[i][4]}</td>
+                        <td>${data[i][5]}</td>
+                        <td>${data[i][6]}</td>
+                        <td>${data[i][7]}</td>
+                    </tr>
+                            `;
+        }
+        $("tbody").html(print);
+        $('#datatable').DataTable();
+    })
+</script>
+
+</html>
